@@ -28,8 +28,7 @@ export default defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
     baseURL: 'https://opensource-demo.orangehrmlive.com/web/index.php/',
-    headless: false,
-    slowMo: 1000,
+    headless: true,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     screenshot: 'on',      // Har test ke baad screenshot

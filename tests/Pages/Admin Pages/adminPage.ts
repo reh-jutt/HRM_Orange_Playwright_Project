@@ -1,11 +1,12 @@
 import { Page, expect } from "@playwright/test"
+import { selectDropdownOption } from "../../helpers/dropDownFuntion.helper";
 
 export class Adminpage {
 
     constructor(private page: Page) { }
 
     async goto() {
-        await this.page.goto("admin/viewSystemUsers")
+        await this.page.goto(`${process.env.BASE_URL}/admin/viewSystemUsers`)
     }
 
 
@@ -18,15 +19,15 @@ export class Adminpage {
     SearchButton = () => this.page.getByRole("button", { name: /search/i });
 
     //Add Tables Locator
-    AddButton = () => this.page.getByRole("button", { name: /\+ add/i });
+    AddButton = () => this.page.getByRole("button", { name: /add/i });
     tableRows = () => this.page.locator('.oxd-table-body .oxd-table-row');
     deleteButton = (username: string) => this.page.locator(`.oxd-table-row:has-text("${username}") button`).first();
     editButton = (username: string) => this.page.locator(`.oxd-table-row:has-text("${username}") button`).nth(1);
 
     async adminPageUI() {
 
-        await expect(this.page).toHaveURL("admin/viewSystemUsers");
-        await expect(this.page).toHaveTitle("Admin /User Management")
+        await expect(this.page).toHaveURL(`${process.env.BASE_URL}/admin/viewSystemUsers`);
+        await expect(this.page.getByRole("heading", { name: /Admin/i })).toBeVisible();
     }
 
     // ======================
@@ -39,13 +40,14 @@ export class Adminpage {
 
         await this.UserRoleDropdown().click();
         // await expect(this.UserRoleDropdown()).toContainText(userRole);
-        await this.selectDropdownOption(userRole);
+        await selectDropdownOption(this.page, userRole);
 
         await this.EmployeeNameInput().fill(employeename);
+        await selectDropdownOption(this.page, employeename);
 
         await this.StatusDropdown().click();
         // await expect(this.StatusDropdown()).toContainText(status);
-        await this.selectDropdownOption(status);
+        await selectDropdownOption(this.page, status);
 
         await this.SearchButton().click();
     }
@@ -79,20 +81,13 @@ export class Adminpage {
     }
 
     //If user not found this function is used
-async userNotFound() {
-  await expect(this.tableRows()).toHaveCount(0);
-}
+    async userNotFound() {
+        await expect(this.tableRows()).toHaveCount(0);
+    }
 
     //This function is used that reset button is working
     async verifyResetButton() {
         await expect(this.UsernameInput()).toHaveValue('');
     }
 
-    //Generic Dropdown function used for user role and status dropdowns
-    async selectDropdownOption(optionText: string) {
-        // await this.page.locator(".oxd-select-option", { hasText: optionText }).click();
-        const listbox = this.page.locator('[role="listbox"]:visible');
-        await listbox.getByRole('option', { name: optionText }).click();
-
-    }
 }

@@ -4,7 +4,7 @@ export class Loginpage {
     constructor(private page: Page) { }
 
     async goto() {
-        await this.page.goto("auth/login"); // uses baseURL
+        await this.page.goto(`${process.env.BASE_URL}/auth/login`);
     }
 
     //Locators for login page elements
@@ -23,27 +23,27 @@ export class Loginpage {
         await this.loginButton().click();
 
         // Wait for the page to load after clicking the login button
-        await Promise.all([
-            this.page.waitForLoadState('load'),
-        ]);
+        // await Promise.all([
+        //     this.page.waitForLoadState('load'),
+        // ]);
     }
 
     // This method verifies that the user is successfully logged in by checking the URL and the presence of the dashboard element
     async verifySuccessfulLogin() {
-        await expect(this.page).toHaveURL("dashboard/index");
+        await expect(this.page).toHaveURL(`${process.env.BASE_URL}/dashboard/index`);
         await expect(this.page.getByRole("heading", { name: /dashboard/i })).toBeVisible();
     }
 
     // This method verifies that the user sees an error message when login fails due to invalid credentials
     async verifyInvalidLoginMessage() {
-        await expect(this.page).toHaveURL("auth/login");
+        await expect(this.page).toHaveURL(`${process.env.BASE_URL}/auth/login`);
         await expect(this.invalidLoginMessage()).toBeVisible();
         await expect(this.invalidLoginMessage()).toHaveText("Invalid credentials");
     }
 
     // This method verifies that the user sees a validation message when trying to login with empty username and password
     async verifyRequiredFieldMessage() {
-        await expect(this.page).toHaveURL("auth/login");
+        await expect(this.page).toHaveURL(`${process.env.BASE_URL}/auth/login`);
         // await expect(this.requiredFieldMessage()).toBeVisible();
         await expect(this.requiredFieldMessage()).toHaveCount(2); // Verify that there are two validation messages (one for username and one for password)
         await expect(this.requiredFieldMessage()).toHaveText(["Required", "Required"]); // Verify that both validation messages display "Required"
@@ -54,7 +54,7 @@ export class Loginpage {
         await expect(this.forgotPasswordLink()).toBeVisible();
         await expect(this.forgotPasswordLink()).toHaveText("Forgot your password?");
         await this.forgotPasswordLink().click();
-        await Promise.all([this.page.waitForURL("auth/requestPasswordResetCode")]);
+        await Promise.all([this.page.waitForURL(`${process.env.BASE_URL}/auth/requestPasswordResetCode`)]);
         await expect(this.page.getByRole("heading", { name: /reset password/i })).toBeVisible();
     }
 }

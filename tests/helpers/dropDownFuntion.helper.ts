@@ -1,18 +1,16 @@
 import { Page } from "@playwright/test";
 
-//Generic Dropdown function used for user role and status dropdowns
+// Generic helper to select dropdown option by text
 export async function selectDropdownOption(page: Page, optionText: string) {
-    // await this.page.locator(".oxd-select-option", { hasText: optionText }).click();
+    // Trim the option text to ensure it matches the visible text in the dropdown, and validate it's not empty
+    const targetText = optionText.trim();
+    if (!targetText) {
+        throw new Error("select Dropdown Option requires non-empty option text");
+    }
+
     const listbox = page.locator('[role="listbox"]:visible');
-
-    // wait for dropdown container
     await listbox.waitFor({ state: 'visible' });
-
-
-    const option = listbox.getByRole('option', { name: optionText });
-
-    // wait for specific option
+    const option = listbox.getByRole('option', { name: new RegExp(`^${targetText}$`, 'i') }).first();
     await option.waitFor({ state: 'visible' });
-
     await option.click();
 }

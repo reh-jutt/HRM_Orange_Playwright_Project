@@ -15,10 +15,15 @@ export default defineConfig({
   use: {
     baseURL: process.env.BASE_URL,
     headless: true,
-    storageState: `tests/auth/auth.json`, // Persisted authentication state
-    screenshot: 'on',
-    video: 'on',
-    trace: 'on',
+  <<<<<<< main
+
+    // Storage File path
+    storageState: `tests/auth/auth.json`,
+
+    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+    screenshot: 'on',      // Har test ke baad screenshot
+    video: 'on',           // Video record hoga
+    trace: 'on',           // Full trace record hoga (best debugging tool)
   },
 
   // Configure browser projects

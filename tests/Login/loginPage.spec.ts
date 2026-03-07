@@ -1,7 +1,12 @@
 import { test } from "@playwright/test";
 import { Loginpage } from "../Pages/login";
 
+// Test suite for login page functionality
 test.describe("All Login Page Tests Cases", () => {
+    
+    // Run login tests with a clean (logged-out) browser state.
+    test.use({ storageState: { cookies: [], origins: [] } });
+
     let loginPage: Loginpage;
 
     test.beforeEach(async ({ page }) => {

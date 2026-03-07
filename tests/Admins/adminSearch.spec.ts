@@ -1,12 +1,11 @@
 import { test } from '@playwright/test';
 import { Adminpage } from "../Pages/Admin Pages/adminPage"
 
-
+// Test suite for admin search functionality
 test.describe('Admin Search Section', () => {
   let admin: Adminpage;
 
   test.beforeEach(async ({ page }) => {
-    //Initializing Admin page
     admin = new Adminpage(page);
     await admin.goto();
   });

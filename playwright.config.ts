@@ -14,8 +14,7 @@ export default defineConfig({
 
   use: {
     baseURL: process.env.BASE_URL,
-    headless: true,
-  <<<<<<< main
+    headless: true, // Set to false to see the browser in action
 
     // Storage File path
     storageState: `tests/auth/auth.json`,

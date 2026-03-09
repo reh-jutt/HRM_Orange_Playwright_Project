@@ -19,11 +19,16 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+    - name: Debug BASE_URL
+      run: |
+        echo "BASE_URL is: ${BASE_URL:-<not-set>}"
+      env:
+        BASE_URL: ${{ vars.BASE_URL }}
     - name: Run Playwright tests
       env:
-         BASE_URL: ${{ vars.BASE_URL }}
-         ADMIN_USER: ${{ secrets.ADMIN_USER }}
-         ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+        BASE_URL: ${{ vars.BASE_URL }}
+        ADMIN_USER: ${{ secrets.ADMIN_USER }}
+        ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
       run: npx playwright test
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}

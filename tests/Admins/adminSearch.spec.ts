@@ -1,31 +1,31 @@
 import { test } from '@playwright/test';
-import { Adminpage } from "../Pages/Admin Pages/adminPage"
+import { userSearch } from "../Pages/Admin Pages/userSearch";
 
 // Test suite for admin search functionality
 test.describe('Admin Search Section', () => {
-  let admin: Adminpage;
+  let searchUser: userSearch;
 
   test.beforeEach(async ({ page }) => {
-    admin = new Adminpage(page);
-    await admin.goto();
+    searchUser = new userSearch(page);
+    await searchUser.goto();
   });
 
   test('Search by Username', async () => {
-    await admin.searchUser("Admin", "-- Select --", "", "-- Select --");
-    await admin.verifyUserPresent('Admin');
+    await searchUser.searchUser("Admin", "-- Select --", "", "-- Select --");
+    await searchUser.verifyUserPresent('Admin');
   });
 
 
   test('Search with invalid username', async () => {
-    await admin.searchUser('XYZ123', "-- Select --", "", "-- Select --");
-    await admin.userNotFound();
+    await searchUser.searchUser('XYZ123', "-- Select --", "", "-- Select --");
+    await searchUser.userNotFound();
   });
 
 
   test('Reset should clear search fields', async () => {
-    await admin.searchUser('Admin', "-- Select --", "", "-- Select --");
-    await admin.ResetUser();
-    await admin.verifyResetButton();
+    await searchUser.searchUser('Admin', "-- Select --", "", "-- Select --");
+    await searchUser.ResetUser();
+    await searchUser.verifyResetButton();
   });
 
 });

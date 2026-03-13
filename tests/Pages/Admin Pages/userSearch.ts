@@ -2,7 +2,7 @@ import { Page, expect } from "@playwright/test"
 import { selectDropdownOption } from "../../helpers/dropDownFuntion.helper";
 import { URLS } from "../../helpers/urls.helper";
 
-export class Adminpage {
+export class userSearch {
     constructor(private page: Page) { }
 
     // Navigate to admin users page

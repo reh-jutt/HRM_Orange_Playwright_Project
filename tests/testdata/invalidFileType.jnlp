@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jnlp codebase="https://tc.jsglobalonline.com///TradeCast/" href="launch.jnlp" spec="1.0+">
+    <information>
+        <title>JSGCL - Trade Cast v3.8.0</title>
+        <vendor>CATALYST IT Solutions (Pvt.) Limited.</vendor>
+        <homepage href=""/>
+        <description>Trade Cast (Next Generation)</description>
+        <description kind="short">1.6.0_01 Java Release.</description>
+
+        <icon kind="shortcut" href="icon.ico" />
+        <shortcut online="true">
+            <desktop/> 
+            <menu submenu="JS Global-Trade Cast v3.7.9"/>
+        </shortcut>
+        <update check="always" policy="prompt-update"/>
+	<offline-allowed/>
+
+    </information>
+    <security>
+        <all-permissions/>
+    </security>
+    
+<resources>
+	<j2se version="1.6+"/>
+	<jar eager="true" href="launch.jar" main="true"/>
+</resources>
+
+  <application-desc main-class="launch.Main">
+	 <argument>JNLPURL#https://tc.jsglobalonline.com//TradeCast/TC.jnlp</argument>
+	 <argument>UNINSTALLURL#</argument>
+	 <argument>HouseName#JSGCL</argument>
+    </application-desc>
+</jnlp>

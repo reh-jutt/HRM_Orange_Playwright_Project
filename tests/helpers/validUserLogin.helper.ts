@@ -1,5 +1,8 @@
 import { Page } from '@playwright/test';
 import { Loginpage } from '../Pages/login';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // Helper function to login with valid credentials
 export async function loginAsValidUser(page: Page) {

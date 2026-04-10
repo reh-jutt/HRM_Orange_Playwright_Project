@@ -17,7 +17,7 @@ test.describe("Test cases of users Cruds", () => {
     loadUserManagementCrud = new UserManagementCrud(page);
   });
 
-  test.skip("Verify Add Users page is correctly open", async ({ page }) => {
+  test("Verify Add Users page is correctly open", async ({ page }) => {
     await loadUserManagementCrud.AddUserPageUI();
     await expect(page).toHaveURL(URLS.ADD_USER);
     await expect(page.getByRole("heading", { name: "Add User" })).toBeVisible();
@@ -36,14 +36,14 @@ test.describe("Test cases of users Cruds", () => {
     await loadUserManagementCrud.verifyUserAdded(uniqueUsername, "Admin", "Ranga Akunuri", "Enabled");
   })
 
-  test.skip("Verify error message when trying to add user with existing username", async () => {
+  test("Verify error message when trying to add user with existing username", async () => {
     await loadUserManagementCrud.AddUserPageUI();
     await loadUserManagementCrud.addUserForm("Admin", "Ranga Akunuri", "Enabled", existingUsername, "rj12345", "rj12345", false);
     await loadUserManagementCrud.DuplicateUsernameError().waitFor({ state: "visible" });
     await expect(loadUserManagementCrud.DuplicateUsernameError()).toBeVisible();
   });
 
-  test.skip("Verify Cancel button functionality on Add User page", async ({ page }) => {
+  test("Verify Cancel button functionality on Add User page", async ({ page }) => {
     await loadUserManagementCrud.AddUserPageUI();
     await loadUserManagementCrud.cancelButtonFunctionality();
     await page.waitForURL(URLS.ADMIN_USERS, { timeout: 30_000 });
@@ -53,7 +53,7 @@ test.describe("Test cases of users Cruds", () => {
     await expect(page).toHaveURL(URLS.ADMIN_USERS);
   });
 
-  test.skip("Verify form validation for mandatory fields on Add User page", async ({ page }) => {
+  test("Verify form validation for mandatory fields on Add User page", async ({ page }) => {
     await loadUserManagementCrud.AddUserPageUI();
     await loadUserManagementCrud.SaveButton().click();
     // await expect(loadUserManagementCrud.RequiredFieldError()).toBeVisible();
@@ -61,7 +61,7 @@ test.describe("Test cases of users Cruds", () => {
     await expect(loadUserManagementCrud.RequiredFieldError()).toHaveText(["Required", "Required", "Required", "Required" , "Required", "Passwords do not match"]); // Verify that all error messages have the text "Required";
   });
 
-  test.skip("Verify form validation for password mismatch on Add User page", async ({ page }) => {
+  test("Verify form validation for password mismatch on Add User page", async ({ page }) => {
     await loadUserManagementCrud.AddUserPageUI();
     await loadUserManagementCrud.addUserForm("Admin", "Ranga Akunuri", "Enabled", uniqueUsername, "rj12345", "differentPassword", false);
     await expect(loadUserManagementCrud.MismatchPasswordError()).toBeVisible();
@@ -69,7 +69,7 @@ test.describe("Test cases of users Cruds", () => {
     await expect(loadUserManagementCrud.MismatchPasswordError()).toHaveCount(1); // Expecting 1 error message for password mismatch
   });
 
-  test.skip("Verify that user is not added when form validation fails on Add User page", async ({ page }) => {
+  test("Verify that user is not added when form validation fails on Add User page", async ({ page }) => {
     await loadUserManagementCrud.AddUserPageUI();
     await loadUserManagementCrud.addUserForm("Admin", "Ranga Akunuri", "Enabled", uniqueUsername, "rj12345", "differentPassword", false);
     await expect(loadUserManagementCrud.MismatchPasswordError()).toBeVisible();
@@ -77,7 +77,7 @@ test.describe("Test cases of users Cruds", () => {
     await expect(page).toHaveURL(URLS.ADD_USER); // Should remain on Add User page due to validation error
   });
 
-  test.skip("Verify that User is deleted successfully", async ({ page }) => {
+  test("Verify that User is deleted successfully", async ({ page }) => {
     await loadUserManagementCrud.AddUserPageUI();
     await loadUserManagementCrud.addUserForm("Admin", "Ranga Akunuri", "Enabled", uniqueUsername, "rj12345", "rj12345");
     await loadUserManagementCrud.SaveButton().click();
@@ -88,7 +88,7 @@ test.describe("Test cases of users Cruds", () => {
     await expect(page.getByText(uniqueUsername)).toHaveCount(0); // Verify user is no longer present in the list
   });
 
-  test.skip("Click on the Cancel button and verify that the user is not deleted", async ({ page }) => {
+  test("Click on the Cancel button and verify that the user is not deleted", async ({ page }) => {
     await loadUserManagementCrud.AddUserPageUI();
     await loadUserManagementCrud.addUserForm("Admin", "Ranga Akunuri", "Enabled", uniqueUsername, "rj12345", "rj12345");
     await loadUserManagementCrud.SaveButton().click();
@@ -98,4 +98,6 @@ test.describe("Test cases of users Cruds", () => {
     await page.waitForURL(URLS.ADMIN_USERS, { timeout: 30_000 });
     await expect(page.getByText(uniqueUsername)).toBeVisible(); // Verify user is still present in the list
   });
+
+  
 });

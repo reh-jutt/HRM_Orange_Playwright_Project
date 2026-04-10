@@ -1,4 +1,7 @@
 // URL management helper - builds full URLs from base URL and paths
+import dotenv from 'dotenv';
+dotenv.config();
+
 export const BASE_URL = (process.env.BASE_URL || '').trim();
 
 function normalizeBaseUrl(url: string): string {
@@ -22,5 +25,7 @@ export const URLS = {
     DASHBOARD: buildUrl('/dashboard/index'),
     ADMIN_USERS: buildUrl('/admin/viewSystemUsers'),
     ADD_USER: buildUrl('/admin/saveSystemUser'),
+    JOB_TITLES: buildUrl('/admin/viewJobTitleList'),
+    ADD_JOB_TITLE: buildUrl('/admin/saveJobTitle'),
     FORGOT_PASSWORD: buildUrl('/auth/requestPasswordResetCode'),
 };
